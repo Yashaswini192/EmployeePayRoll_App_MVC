@@ -46,5 +46,47 @@ namespace RepoLayer.Service
                 throw ex;
             }
         }
+
+        public IEnumerable<EmployeeModel> GetAllEmployees()
+        {
+            try
+            {
+                List<EmployeeModel> employees = new List<EmployeeModel>();
+                using (SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("EmpPayRollDataBase")))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("GetAllEmployees", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            EmployeeModel employeeModel = new EmployeeModel()
+                            {
+                                EmpId = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                ProfileImage = reader.GetString(2),
+                                Gender = reader.GetString(3),
+                                Department = reader.GetString(4),
+                                Salary = reader.GetDecimal(5),
+                                StartDate = reader.GetDateTime(6),
+                                Notes = reader.GetString(7)
+                            };
+                            employees.Add(employeeModel);
+
+                        }
+                    }
+                    con.Close();
+                    reader.Close();
+                    return employees;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

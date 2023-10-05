@@ -9,5 +9,7 @@ namespace RepoLayer.Interface
     {
         public string AddEmployee(EmployeeModel employeeModel);
 
+        public IEnumerable<EmployeeModel> GetAllEmployees();
+
     }
 }

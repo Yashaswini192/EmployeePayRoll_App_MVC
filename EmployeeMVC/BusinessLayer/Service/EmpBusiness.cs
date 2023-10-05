@@ -28,5 +28,17 @@ namespace BusinessLayer.Service
             }
         }
 
+        public IEnumerable<EmployeeModel> GetAllEmployees()
+        {
+            try
+            {
+                return empRepo.GetAllEmployees();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
