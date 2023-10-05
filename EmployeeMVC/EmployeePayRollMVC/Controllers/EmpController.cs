@@ -16,10 +16,8 @@ namespace EmployeePayRollMVC.Controllers
         }
         public IActionResult Index()
         {
-            List<EmployeeModel> list = new List<EmployeeModel>();
-            list = empBusiness.GetAllEmployees().ToList();
-
-            return View(list);
+            
+            return View();
         }
 
         [HttpGet]
