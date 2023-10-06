@@ -88,5 +88,80 @@ namespace RepoLayer.Service
                 throw ex;
             }
         }
+
+        public EmployeeModel GetEmployeeById(int EmpId)
+        {
+            try
+            {
+                string query = "SELECT * FROM EMPLOYEE WHERE EmpId=" + EmpId;
+                
+                using (SqlConnection connection = new SqlConnection(this.configuration.GetConnectionString("EmpPayRollDataBase")))
+                {
+                    EmployeeModel employee = new EmployeeModel();
+                    SqlCommand sqlCommand = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        EmployeeModel emp = new EmployeeModel()
+                        {
+                            EmpId = Convert.ToInt32(reader["EmpId"]),
+                            Name = reader["Name"].ToString(),
+                            ProfileImage = reader["ProfileImage"].ToString(),
+                            Gender = reader["Gender"].ToString(),
+                            Department = reader["Department"].ToString(),
+                            Salary = Convert.ToInt64(reader["Salary"]),
+                            StartDate = reader.GetDateTime(6),
+                            Notes = reader["Notes"].ToString()
+                        };
+                        return emp;
+                    }
+                    return employee;
+
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel)
+        {
+            try
+            {
+                using (SqlConnection connect = new SqlConnection(this.configuration.GetConnectionString("EmpPayRollDataBase")))
+                {
+                    connect.Open();
+                    SqlCommand cmd = new SqlCommand("UpdateEmployeeDetails", connect);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    //SqlDataReader reader = cmd.ExecuteReader();
+
+                   
+                        cmd.Parameters.AddWithValue("@EmpID", employeeModel.EmpId);
+                        cmd.Parameters.AddWithValue("@Name", employeeModel.Name);
+                        cmd.Parameters.AddWithValue("@ProfileImage", employeeModel.ProfileImage);
+                        cmd.Parameters.AddWithValue("@Gender", employeeModel.Gender);
+                        cmd.Parameters.AddWithValue("@department", employeeModel.Department);
+                        cmd.Parameters.AddWithValue("@Salary", employeeModel.Salary);
+                        cmd.Parameters.AddWithValue("@StartDate", employeeModel.StartDate);
+                        cmd.Parameters.AddWithValue("@Notes", employeeModel.Notes);
+
+                        cmd.ExecuteNonQuery();
+
+                        connect.Close();
+                        if (employeeModel != null)
+                        {
+                            return employeeModel;
+                        }
+                        return employeeModel;
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }     
     }
 }

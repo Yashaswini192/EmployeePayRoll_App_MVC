@@ -38,7 +38,28 @@ namespace BusinessLayer.Service
             {
                 throw ex;
             }
-
         }
+        public EmployeeModel GetEmployeeById(int emp_Id)
+        {
+            try
+            {
+                return empRepo.GetEmployeeById(emp_Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel)
+        {
+            try
+            {
+                return empRepo.UpdateEmployeeById(employeeModel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }       
     }
 }

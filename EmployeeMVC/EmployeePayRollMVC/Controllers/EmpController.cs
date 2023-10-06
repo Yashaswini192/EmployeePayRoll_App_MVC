@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Interface;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,5 +38,43 @@ namespace EmployeePayRollMVC.Controllers
             }
             return View(employee);
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            EmployeeModel employee = empBusiness.GetEmployeeById(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpPost]       
+        public IActionResult Edit(int id,[Bind] EmployeeModel employee)
+        {
+            try
+            {
+                if (id != employee.EmpId)
+                {
+                    return NotFound();
+                }
+                if (ModelState.IsValid)
+                {
+                    empBusiness.UpdateEmployeeById(employee);
+                    return RedirectToAction("Index");
+                }
+                return View(employee);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }       
     }
 }

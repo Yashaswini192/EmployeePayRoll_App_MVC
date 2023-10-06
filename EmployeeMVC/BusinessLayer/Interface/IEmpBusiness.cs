@@ -11,5 +11,9 @@ namespace BusinessLayer.Interface
 
         public IEnumerable<EmployeeModel> GetAllEmployees();
 
+        public EmployeeModel GetEmployeeById(int emp_Id);
+
+        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel);      
+      
     }
 }

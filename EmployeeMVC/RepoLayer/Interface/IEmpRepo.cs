@@ -11,5 +11,9 @@ namespace RepoLayer.Interface
 
         public IEnumerable<EmployeeModel> GetAllEmployees();
 
+        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel);
+
+        public EmployeeModel GetEmployeeById(int emp_Id);
+
     }
 }
