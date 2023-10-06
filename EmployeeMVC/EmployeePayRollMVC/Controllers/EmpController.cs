@@ -75,6 +75,29 @@ namespace EmployeePayRollMVC.Controllers
             {
                 throw ex;
             }
-        }       
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            EmployeeModel employee = empBusiness.GetEmployeeById(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            empBusiness.DeleteEmployee(id);
+            return RedirectToAction("Index");
+        }
     }
 }

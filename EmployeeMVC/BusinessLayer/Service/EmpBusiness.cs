@@ -60,6 +60,18 @@ namespace BusinessLayer.Service
             {
                 throw ex;
             }
-        }       
+        }
+        public string DeleteEmployee(int Id)
+        {
+            try
+            {
+                return empRepo.DeleteEmployee(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

@@ -162,6 +162,30 @@ namespace RepoLayer.Service
             {
                 throw ex;
             }
-        }     
+        }
+
+        public string DeleteEmployee(int Id)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(this.configuration.GetConnectionString("EmpPayRollDataBase")))
+                {
+                    con.Open();
+                    SqlCommand sqlCommand = new SqlCommand("DeleteEmployee", con);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@EmpId", Id);
+                    int value = sqlCommand.ExecuteNonQuery();
+                    string res = value.ToString();
+                    con.Close();
+                    return res;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

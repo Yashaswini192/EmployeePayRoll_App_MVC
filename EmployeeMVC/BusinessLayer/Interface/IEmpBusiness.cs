@@ -13,7 +13,9 @@ namespace BusinessLayer.Interface
 
         public EmployeeModel GetEmployeeById(int emp_Id);
 
-        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel);      
-      
+        public EmployeeModel UpdateEmployeeById(EmployeeModel employeeModel);
+
+        public string DeleteEmployee(int Id);
+
     }
 }
