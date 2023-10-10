@@ -1,19 +1,11 @@
-﻿﻿.main-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-img {
-}
-
-.row {
+﻿.row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
-    width: 80%;
+    width: 100%;
     justify-content: center;
     align-content: center;
     align-items: center;
@@ -27,12 +19,4 @@ img {
     align-content: center;
     justify-content: center;
     align-items: center;
-}
-
-.Images {
-    display: flex;
-    flex-direction: row;
-    width:80px;
-    justify-content:space-between;
-    
 }
