@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link href="~/css/IndexPage.css" rel="stylesheet"/>
 
 <h1>Index</h1>
 
@@ -68,7 +69,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id = item.EmpId }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.EmpId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.EmpId })
             </td>
         </tr>
