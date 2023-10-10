@@ -30,6 +30,13 @@ namespace EmployeePayRollMVC
             services.AddControllersWithViews();
             services.AddTransient<IEmpBusiness, EmpBusiness>();
             services.AddTransient<IEmpRepo,EmpRepo>();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(120);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,10 +54,12 @@ namespace EmployeePayRollMVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
+
+           
 
             app.UseEndpoints(endpoints =>
             {

@@ -187,5 +187,33 @@ namespace RepoLayer.Service
             }
         }
 
+        public EmployeeModel Login(LoginModel loginModel)
+        {
+            try
+            {
+                using(SqlConnection connect = new SqlConnection(this.configuration.GetConnectionString("EmpPayRollDataBase")))
+                {
+                    connect.Open();
+                    SqlCommand sqlCommand = new SqlCommand("EmployeeLogin", connect);
+                    sqlCommand.CommandType= CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@EmpID",loginModel.EmpID);
+                    sqlCommand.Parameters.AddWithValue("@UserName", loginModel.EmpName);
+
+                    EmployeeModel empmodel = new EmployeeModel();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        empmodel.EmpId = reader.GetInt32(0);
+                        empmodel.Name = reader.GetString(1);
+                    }
+                    return empmodel;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

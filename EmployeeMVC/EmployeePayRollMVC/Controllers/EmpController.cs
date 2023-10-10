@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelLayer.Model;
 using System;
@@ -55,8 +56,8 @@ namespace EmployeePayRollMVC.Controllers
             return View(employee);
         }
 
-        [HttpPost]       
-        public IActionResult Edit(int id,[Bind] EmployeeModel employee)
+        [HttpPost]
+        public IActionResult Edit(int id, [Bind] EmployeeModel employee)
         {
             try
             {
@@ -71,7 +72,7 @@ namespace EmployeePayRollMVC.Controllers
                 }
                 return View(employee);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -98,6 +99,74 @@ namespace EmployeePayRollMVC.Controllers
         {
             empBusiness.DeleteEmployee(id);
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [Route("Emp/UserData")]
+        public IActionResult Details(int id)
+        {
+            //id =(int) HttpContext.Session.GetInt32("EmpId");
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var employee = empBusiness.GetEmployeeById(id);
+            ViewBag.Message = "Data Fetched Successfully".ToString();
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpGet]
+        [Route("EmpData")]
+        public IActionResult EmpDetails(int id)
+        {
+            id = (int)HttpContext.Session.GetInt32("EmpId");
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var employee = empBusiness.GetEmployeeById(id);
+            ViewBag.Message = "Data Fetched Successfully".ToString();
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = empBusiness.Login(model);
+                    if (result != null)
+                    {
+                        HttpContext.Session.SetInt32("EmpId", result.EmpId);
+                        HttpContext.Session.SetString("EmpName", result.Name);
+                        return RedirectToAction("EmpDetails");
+                    }
+                    return NotFound();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
         }
     }
 }

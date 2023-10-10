@@ -73,5 +73,17 @@ namespace BusinessLayer.Service
             }
         }
 
+        public EmployeeModel Login(LoginModel loginModel)
+        {
+            try
+            {
+                return empRepo.Login(loginModel);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
